@@ -1,5 +1,5 @@
  //控制层 
-app.controller('sellerController' ,function($scope,$controller   ,sellerService){	
+app.controller('sellerController' ,function($scope,$controller   ,sellerService){
 	
 	$controller('baseController',{$scope:$scope});//继承
 	
@@ -94,8 +94,24 @@ app.controller('sellerController' ,function($scope,$controller   ,sellerService)
 
         sellerService.exportExcel().success(
             function(response){
+            }
+        );
+    }
 
+    // 导出excel 测试  szj
+    $scope.exportExcel2=function(){
 
+        sellerService.exportExcel2().success(
+            function(response){
+            }
+        );
+    }
+
+// 导出excel 测试  szj
+    $scope.exportExcel3=function(){
+
+        sellerService.exportExcel3().success(
+            function(response){
             }
         );
     }

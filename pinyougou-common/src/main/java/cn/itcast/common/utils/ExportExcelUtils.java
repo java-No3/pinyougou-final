@@ -17,6 +17,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 
 
 /**
@@ -45,16 +46,27 @@ public class ExportExcelUtils {
         }
         // 设置response头信息
         response.reset();
-//        response.setContentType("application/vnd.ms-excel"); // 改成输出excel文件
-//        try {
-//            response.setHeader("Content-disposition", "attachment; filename="
-//                    +new String(excelName.getBytes("gb2312"), "ISO-8859-1")  + ".xls");
-//        } catch (UnsupportedEncodingException e1) {
-//            logger.info(e1.getMessage());
-//        }
+        // response.setCharacterEncoding("UTF-8");
 
-        response.setHeader("Content-disposition", "attachment; filename=details.xls");
-        response.setContentType("application/msexcel");
+        // response.setContentType("application/octet-stream");
+        // response.setContentType("application/x-msdownload");
+        response.setContentType("application/vnd.ms-excel"); // 改成输出excel文件
+        // 后端获取文件名
+        response.addHeader("Access-Control-Expose-Headers", "Content-disposition");
+        try {
+            // response.setHeader("Content-disposition", "attachment; filename="+new String(excelName.getBytes("gb2312"), "ISO-8859-1")  + ".xls");
+            // response.setHeader("Content-disposition", "attachment; filename="+excelName+ ".xls");
+            response.setHeader("Content-disposition", "attachment; filename*=汉字咋了你妹的乱码.xls");
+            // response.setHeader("Content-disposition", "attachment; filename=seller.xls");
+        // } catch (UnsupportedEncodingException e1) {
+
+        } catch (Exception e1) {
+            logger.info(e1.getMessage());
+        }
+
+        // todo 验证下载
+       //  response.setHeader("Content-disposition", "attachment; filename=details.xls");
+        // response.setContentType("application/msexcel");
         try {
             //创建一个WorkBook,对应一个Excel文件
             HSSFWorkbook wb=new HSSFWorkbook();
@@ -67,33 +79,41 @@ public class ExportExcelUtils {
             // 填充工作表
             fillSheet(sheet,list,fieldMap,style);
             //将文件输出
-//            OutputStream ouputStream = response.getOutputStream();
-//            wb.write(ouputStream);
-//            ouputStream.flush();
+            OutputStream ouputStream = response.getOutputStream();
+            wb.write(ouputStream);
+            ouputStream.flush();
+            ouputStream.close();
+
+
+//            byte[] bytes = wb.getBytes();
+//            ouputStream.write(bytes, 0, bytes.length);
 //            ouputStream.close();
-            File file = new File("E:\\log\\out.xls");
-            if(!file.exists()){ //先得到文件的上级目录，并创建上级目录，在创建文件
-                file.getParentFile().mkdir();
-                try {
-                    //创建文件
-                    file.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            OutputStream fos = null;
-            //定义一个缓存区
-            byte[] buf = new byte[1024];
-            int len = 0;
-            try{
-                //获取到输出对象
-                fos = new FileOutputStream(file);
-                wb.write(fos);
-                fos.flush();
-                fos.close();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+
+
+
+//            File file = new File("E:\\log\\out.xls");
+//            if(!file.exists()){ //先得到文件的上级目录，并创建上级目录，在创建文件
+//                file.getParentFile().mkdir();
+//                try {
+//                    //创建文件
+//                    file.createNewFile();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            OutputStream fos = null;
+//            //定义一个缓存区
+//            byte[] buf = new byte[1024];
+//            int len = 0;
+//            try{
+//                //获取到输出对象
+//                fos = new FileOutputStream(file);
+//                wb.write(fos);
+//                fos.flush();
+//                fos.close();
+//            }catch (IOException e){
+//                e.printStackTrace();
+//            }
 
 
 
