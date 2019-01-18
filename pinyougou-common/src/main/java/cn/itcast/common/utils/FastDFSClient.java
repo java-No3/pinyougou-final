@@ -16,10 +16,7 @@ public class FastDFSClient {
 	private StorageClient1 storageClient = null;
 
 
-	//什么是工程 测试szj19:52:10
-	//什么是发布
-	//开发代码在哪里 是什么目录结构
-	//发布到服务器上 是什么目录结构
+
 
 	//              classpath:     fastDFS/fdfs_client.conf
 	public FastDFSClient(String conf) throws Exception {
