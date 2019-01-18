@@ -94,12 +94,6 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public void delete(Long[] ids) {
-        //勉强可以
-    /*    for (Long id : ids) {
-            brandDao.deleteByPrimaryKey(id);
-        }*/
-
-        //delete from tb_brand where id in (1,2,3)  自己写 逆向工程
 
         BrandQuery brandQuery = new BrandQuery();
         brandQuery.createCriteria().andIdIn(Arrays.asList(ids));

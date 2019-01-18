@@ -20,8 +20,8 @@ app.service("brandService",function($http){
 		return $http.get("../brand/findOne.do?id="+id);
 	}
 	
-	this.dele = function(ids){
-		return $http.get("../brand/delete.do?ids="+ids);
+	this.sellerdele = function(ids){
+		return $http.get("../brand/sellerdele.do?ids="+ids);
 	}
 	
 	this.search = function(page,rows,searchEntity){
